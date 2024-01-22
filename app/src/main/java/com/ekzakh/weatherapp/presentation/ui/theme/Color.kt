@@ -1,4 +1,4 @@
-package com.ekzakh.weatherapp.ui.theme
+package com.ekzakh.weatherapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
