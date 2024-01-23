@@ -21,6 +21,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val key = property("apiKey")?.toString() ?: error("You should add api key to gradle properties")
+
+        buildConfigField("String", "WEATHER_API_KEY", key)
     }
 
     buildTypes {
@@ -41,6 +44,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.7"
@@ -71,6 +75,8 @@ dependencies {
     ksp(libs.dagger.compiler)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
     implementation(libs.room)
     ksp(libs.room.compiler)
     implementation(libs.matirial.icons)
