@@ -8,6 +8,9 @@ import com.ekzakh.weatherapp.data.local.model.CityDbModel
 
 @Database(entities = [CityDbModel::class], version = 1, exportSchema = false)
 abstract class FavoriteDatabase : RoomDatabase() {
+
+    abstract fun favoriteDao(): FavoriteCitiesDao
+
     companion object {
         private var INSTANCE: FavoriteDatabase? = null
         private val LOCK = Any()
