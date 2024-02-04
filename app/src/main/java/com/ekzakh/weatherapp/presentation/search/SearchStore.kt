@@ -15,7 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-internal interface SearchStore : Store<Intent, State, Label> {
+interface SearchStore : Store<Intent, State, Label> {
 
     sealed interface Intent {
         data class ChangeSearchQuery(val query: String) : Intent
@@ -39,12 +39,12 @@ internal interface SearchStore : Store<Intent, State, Label> {
 
     sealed interface Label {
         data object ClickBack : Label
-        data object SaveToFavorite : Label
-        data class OpenForecast(val city: City) : Label
+        data object SavedToFavorite : Label
+        data class CityClick(val city: City) : Label
     }
 }
 
-internal class SearchStoreFactory @Inject constructor(
+class SearchStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
     private val searchCityUseCase: SearchCityUseCase,
     private val addToFavoriteUseCase: AddToFavoriteUseCase,
@@ -93,12 +93,12 @@ internal class SearchStoreFactory @Inject constructor(
                     scope.launch {
                         when (openReason) {
                             OpenReason.RegularSearch -> {
-                                publish(Label.OpenForecast(intent.city))
+                                publish(Label.CityClick(intent.city))
                             }
 
                             OpenReason.AddToFavorite -> {
                                 addToFavoriteUseCase.invoke(intent.city)
-                                publish(Label.SaveToFavorite)
+                                publish(Label.SavedToFavorite)
                             }
                         }
                     }
