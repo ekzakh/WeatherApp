@@ -18,7 +18,7 @@ class DefaultFavoriteComponent @AssistedInject constructor(
     @Assisted private val componentContext: ComponentContext,
     @Assisted("onAddCityClick") private val onAddCityClick: () -> Unit,
     @Assisted("onSearchClick") private val onSearchClick: () -> Unit,
-    @Assisted private val onCityClick: (Int) -> Unit,
+    @Assisted private val onCityClick: (City) -> Unit,
 ) : FavoriteComponent, ComponentContext by componentContext {
 
     private val store = instanceKeeper.getStore { favoriteStoreFactory.create() }
@@ -33,7 +33,7 @@ class DefaultFavoriteComponent @AssistedInject constructor(
                     }
 
                     is FavoriteStore.Label.CityClicked -> {
-                        onCityClick(label.cityId)
+                        onCityClick(label.city)
                     }
 
                     FavoriteStore.Label.SearchClicked -> {
@@ -48,7 +48,7 @@ class DefaultFavoriteComponent @AssistedInject constructor(
     override val model: StateFlow<FavoriteStore.State> = store.stateFlow
 
     override fun clickCityItem(city: City) =
-        store.accept(FavoriteStore.Intent.CityClicked(city.id))
+        store.accept(FavoriteStore.Intent.CityClicked(city))
 
     override fun addToFavoriteClick() =
         store.accept(FavoriteStore.Intent.AddCityClicked)
@@ -62,7 +62,7 @@ class DefaultFavoriteComponent @AssistedInject constructor(
             @Assisted componentContext: ComponentContext,
             @Assisted("onAddCityClick") onAddCityClick: () -> Unit,
             @Assisted("onSearchClick") onSearchClick: () -> Unit,
-            @Assisted onCityClick: (Int) -> Unit,
+            @Assisted onCityClick: (City) -> Unit,
         ): DefaultFavoriteComponent
     }
 }

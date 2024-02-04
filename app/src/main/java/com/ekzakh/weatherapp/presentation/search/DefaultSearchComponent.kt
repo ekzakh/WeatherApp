@@ -18,7 +18,7 @@ class DefaultSearchComponent @AssistedInject constructor(
     @Assisted private val openReason: OpenReason,
     @Assisted private val componentContext: ComponentContext,
     @Assisted("onClickBack") private val onClickBack: () -> Unit,
-    @Assisted private val onCityClick: (Int) -> Unit,
+    @Assisted private val onCityClick: (City) -> Unit,
     @Assisted("onSavedToFavorite") private val onSavedToFavorite: () -> Unit,
 ) : SearchComponent, ComponentContext by componentContext {
 
@@ -34,7 +34,7 @@ class DefaultSearchComponent @AssistedInject constructor(
                     }
 
                     is SearchStore.Label.CityClick -> {
-                        onCityClick(label.city.id)
+                        onCityClick.invoke(label.city)
                     }
 
                     SearchStore.Label.SavedToFavorite -> {
@@ -63,7 +63,7 @@ class DefaultSearchComponent @AssistedInject constructor(
             @Assisted openReason: OpenReason,
             @Assisted componentContext: ComponentContext,
             @Assisted("onClickBack") onClickBack: () -> Unit,
-            @Assisted onCityClick: (Int) -> Unit,
+            @Assisted onCityClick: (City) -> Unit,
             @Assisted("onSavedToFavorite") onSavedToFavorite: () -> Unit,
         ): DefaultSearchComponent
     }

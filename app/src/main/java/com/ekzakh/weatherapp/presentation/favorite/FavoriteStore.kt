@@ -19,7 +19,7 @@ interface FavoriteStore : Store<Intent, State, Label> {
     sealed interface Intent {
         data object SearchClicked : Intent
         data object AddCityClicked : Intent
-        data class CityClicked(val cityId: Int) : Intent
+        data class CityClicked(val city: City) : Intent
     }
 
     data class State(val cities: List<CityItem>) {
@@ -43,7 +43,7 @@ interface FavoriteStore : Store<Intent, State, Label> {
     sealed interface Label {
         data object SearchClicked : Label
         data object AddCityClicked : Label
-        data class CityClicked(val cityId: Int) : Label
+        data class CityClicked(val city: City) : Label
     }
 }
 
@@ -99,7 +99,7 @@ class FavoriteStoreFactory @Inject constructor(
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 Intent.AddCityClicked -> publish(Label.AddCityClicked)
-                is Intent.CityClicked -> publish(Label.CityClicked(intent.cityId))
+                is Intent.CityClicked -> publish(Label.CityClicked(intent.city))
                 Intent.SearchClicked -> publish(Label.SearchClicked)
             }
         }
