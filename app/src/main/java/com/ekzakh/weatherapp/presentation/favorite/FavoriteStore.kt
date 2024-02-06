@@ -134,8 +134,8 @@ class FavoriteStoreFactory @Inject constructor(
         override fun State.reduce(msg: Msg): State = when (msg) {
             is Msg.FavoriteCitiesLoaded -> {
                 copy(
-                    cities = cities.map {
-                        State.CityItem(it.city, weatherState = State.WeatherState.Initial)
+                    cities = msg.cities.map {
+                        State.CityItem(it, weatherState = State.WeatherState.Initial)
                     },
                 )
             }
