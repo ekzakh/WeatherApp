@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.ekzakh.weatherapp.R
+import com.ekzakh.weatherapp.domain.entity.City
 import com.ekzakh.weatherapp.presentation.extentions.tempToFormatted
 import com.ekzakh.weatherapp.presentation.ui.theme.CardGradients
 import com.ekzakh.weatherapp.presentation.ui.theme.Gradient
@@ -61,7 +62,11 @@ fun FavoriteContent(favoriteComponent: FavoriteComponent) {
             SearchCard(onClick = { favoriteComponent.searchClick() })
         }
         itemsIndexed(items = state.cities, key = { _, item -> item.city.id }) { index, item ->
-            CityCard(index, item)
+            CityCard(
+                index = index,
+                item = item,
+                onItemClick = { favoriteComponent.clickCityItem(it) },
+            )
         }
         item {
             AddToFavorite(onClick = { favoriteComponent.addToFavoriteClick() })
@@ -71,11 +76,16 @@ fun FavoriteContent(favoriteComponent: FavoriteComponent) {
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-private fun CityCard(index: Int, item: FavoriteStore.State.CityItem) {
+private fun CityCard(
+    index: Int,
+    item: FavoriteStore.State.CityItem,
+    onItemClick: (City) -> Unit,
+) {
     val gradient = getGradientByIndex(index)
     Card(
         modifier = Modifier
             .fillMaxSize()
+            .clickable { onItemClick(item.city) }
             .shadow(
                 elevation = 16.dp,
                 shape = MaterialTheme.shapes.extraLarge,
