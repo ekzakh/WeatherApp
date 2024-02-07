@@ -28,10 +28,10 @@ interface FavoriteStore : Store<Intent, State, Label> {
             val weatherState: WeatherState,
         )
 
-        interface WeatherState {
-            object Initial : WeatherState
-            object Loading : WeatherState
-            object Error : WeatherState
+        sealed interface WeatherState {
+            data object Initial : WeatherState
+            data object Loading : WeatherState
+            data object Error : WeatherState
 
             data class Loaded(
                 val temp: Float,

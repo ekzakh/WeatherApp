@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.room)
     ksp(libs.room.compiler)
     implementation(libs.matirial.icons)
+    implementation(libs.glide)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
